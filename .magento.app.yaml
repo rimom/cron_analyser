@@ -4,7 +4,7 @@
 # See https://docs.platform.sh/user_guide/reference/platform-app-yaml.html
 
 # The name of this app. Must be unique within a project.
-name: cron_app
+name: cron_analyser
 
 # The runtime the application uses.
 type: "python:3.10"
@@ -17,7 +17,10 @@ dependencies:
 # The hooks executed at various points in the lifecycle of the application.
 hooks:
     build: |
-      pip install -r requirements.txt
+        set -e
+        ./install-poetry.sh
+        export PATH="/app/.local/bin:$PATH"
+        poetry install
 
 # The size of the persistent disk of the application (in MB).
 disk: 1024
@@ -25,8 +28,8 @@ disk: 1024
 # The configuration of app when it is exposed to the web.
 web:
     commands:
-        start: python app.py
-        
+        start: poetry run server.py -p $PORT
+
 # Environment variables
 variables:
     env:

@@ -1,8 +1,6 @@
 Flask
 openai
-matplotlib
 python-dotenv
 croniter
 pandas
 plotly
-kaleido
