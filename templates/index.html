@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cron Job Visualized</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="input-container">
+      <h1>Cron Job Visualized</h1>
+      <p>
+        This tool only visualizes the cron jobs schedule, not their execution
+        time.
+      </p>
+      <form id="cron-form" class="form-group">
+        <textarea
+          id="cron-input"
+          class="form-control"
+          placeholder="Paste your cron jobs here, we are going to use AI to adjust it to the proper format and feed the chart..."
+          rows="8"
+        ></textarea>
+
+        <!-- Timeframe Selection -->
+        <label for="timeframe">Select Timeframe (in hours):</label>
+        <input
+          class="timeframe"
+          type="number"
+          id="timeframe"
+          name="timeframe"
+          value="12"
+          min="1"
+          max="72"
+        />
+
+        <div class="button-container mt-3">
+          <button type="submit" class="btn btn-primary">Generate Chart</button>
+        </div>
+
+        <!-- Loading Icon -->
+        <div id="loading-container">
+          <i
+            id="loading-icon"
+            class="fas fa-spinner fa-spin"
+            style="display: none"
+          ></i>
+        </div>
+      </form>
+    </div>
+
+    <div class="chart-container">
+      <div id="chart-container">
+        <!-- Interactive chart HTML will be injected here -->
+      </div>
+    </div>
+
+    <!-- Display Parsed JSON Button (initially hidden) -->
+    <div
+      class="json-button-container"
+      style="text-align: center; margin-top: 20px"
+    >
+      <button
+        id="show-json-btn"
+        class="btn btn-secondary"
+        style="display: none"
+      >
+        Display the Parsed JSON
+      </button>
+    </div>
+
+    <!-- JSON Modal or Block (hidden initially) -->
+    <div
+      id="json-output"
+      style="display: none; text-align: center; margin-top: 20px"
+    >
+      <pre
+        id="parsed-json-content"
+        style="
+          background-color: #f4f4f9;
+          padding: 20px;
+          border-radius: 8px;
+          text-align: left;
+        "
+      ></pre>
+    </div>
+
+    <script>
+      document
+        .getElementById("cron-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Clear the JSON display and reset the button when submitting
+          document.getElementById("json-output").style.display = "none";
+          document.getElementById("parsed-json-content").textContent = "";
+          document.getElementById("show-json-btn").style.display = "none";
+
+          document.getElementById("loading-icon").style.display =
+            "inline-block";
+
+          const formData = new FormData();
+          formData.append(
+            "cron_input",
+            document.getElementById("cron-input").value
+          );
+          formData.append(
+            "timeframe",
+            document.getElementById("timeframe").value
+          );
+
+          fetch("/generate_chart", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              document.getElementById("loading-icon").style.display = "none";
+              if (data.chart_html) {
+                const chartContainer =
+                  document.getElementById("chart-container");
+                chartContainer.innerHTML = data.chart_html;
+
+                // Execute scripts in the injected chart HTML
+                const scripts = chartContainer.getElementsByTagName("script");
+                for (let i = 0; i < scripts.length; i++) {
+                  eval(scripts[i].innerHTML);
+                }
+
+                // Make the JSON button visible after the chart is plotted
+                document.getElementById("show-json-btn").style.display =
+                  "block";
+
+                // Store the parsed JSON for later display
+                window.parsedCronJson = data.parsed_json; // Store the parsed JSON globally
+              } else {
+                alert("Failed to generate chart.");
+              }
+            })
+            .catch((error) => {
+              document.getElementById("loading-icon").style.display = "none";
+              console.error("Error fetching chart:", error);
+              alert("An error occurred while generating the chart.");
+            });
+        });
+
+      // Add event listener to the JSON button
+      document
+        .getElementById("show-json-btn")
+        .addEventListener("click", function () {
+          // Display the parsed JSON in a formatted block
+          document.getElementById("parsed-json-content").textContent =
+            JSON.stringify(window.parsedCronJson, null, 2);
+          document.getElementById("json-output").style.display = "block";
+        });
+    </script>
+  </body>
+</html>
