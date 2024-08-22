@@ -21,140 +21,140 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 def get_parsed_cron_jobs(raw_input):
 
     #mock response
-    return """[
-  {
-    "job_name": "sm_product_update_default_special_price",
-    "schedule": "*/30 * * * *"
-  },
-  {
-    "job_name": "sm_product_convert_url",
-    "schedule": "*/30 * * * *"
-  },
-  {
-    "job_name": "sm_remind_limit_sent_email",
-    "schedule": "0 * * * *"
-  },
-  {
-    "job_name": "sm_sales_email_convert_sending",
-    "schedule": "*/15 * * * *"
-  },
-  {
-    "job_name": "sm_sap_auto_tracking",
-    "schedule": "0 */4 * * *"
-  },
-  {
-    "job_name": "cleanup",
-    "schedule": "0 14,21 * * *"
-  },
-  {
-    "job_name": "send_email_order_ready_to_collect_first",
-    "schedule": "*/27 * * * *"
-  },
-  {
-    "job_name": "send_email_order_ready_to_collect_second",
-    "schedule": "*/29 * * * *"
-  },
-  {
-    "job_name": "send_email_invoice_paid",
-    "schedule": "*/31 * * * *"
-  },
-  {
-    "job_name": "send_reminder",
-    "schedule": "* * * * *"
-  },
-  {
-    "job_name": "sm_force_sapexpress_cron",
-    "schedule": "00 1,3,5,7,9,11,13,15,17,19,21,23 * * *"
-  },
-  {
-    "job_name": "wavecell_send_order_confirmation",
-    "schedule": "*/20 * * * *"
-  },
-  {
-    "job_name": "wavecell_send_payment_verified",
-    "schedule": "*/5 * * * *"
-  },
-  {
-    "job_name": "wavecell_send_shipment",
-    "schedule": "*/25 * * * *"
-  },
-  {
-    "job_name": "update_status_pre_shipment",
-    "schedule": "00 */3 * * *"
-  },
-  {
-    "job_name": "create_purchase_for_order",
-    "schedule": "*/10 * * * *"
-  },
-  {
-    "job_name": "create_refund_for_order",
-    "schedule": "*/10 * * * *"
-  },
-  {
-    "job_name": "thor_create_refund_for_order",
-    "schedule": "0 */4 * * *"
-  },
-  {
-    "job_name": "report_request_failed",
-    "schedule": "0 23 * * *"
-  },
-  {
-    "job_name": "sm_product_update_configurable_image",
-    "schedule": "*/10 * * * *"
-  },
-  {
-    "job_name": "sm_product_configurable_without_image",
-    "schedule": "*/15 * * * *"
-  },
-  {
-    "job_name": "sm_media_product_image_listing",
-    "schedule": "*/30 * * * *"
-  },
-  {
-    "job_name": "sm_media_cms_image_listing",
-    "schedule": "*/30 * * * *"
-  },
-  {
-    "job_name": "sm_media_image_clean",
-    "schedule": "*/30 * * * *"
-  },
-  {
-    "job_name": "sm_remove_invalid_lock_cron",
-    "schedule": "*/5 * * * *"
-  },
-  {
-    "job_name": "update_expiry_time",
-    "schedule": "*/10 * * * *"
-  },
-  {
-    "job_name": "sm_update_expiry_time_gopay",
-    "schedule": "*/10 * * * *"
-  },
-  {
-    "job_name": "sm_product_update_default_special_price",
-    "schedule": "*/30 * * * *"
-  },
-  {
-    "job_name": "sm_product_convert_url",
-    "schedule": "*/30 * * * *"
-  },
-  {
-    "job_name": "sm_remind_limit_sent_email",
-    "schedule": "0 * * * *"
-  },
-  {
-    "job_name": "sm_sales_email_convert_sending",
-    "schedule": "*/15 * * * *"
-  },
-  {
-    "job_name": "sm_sap_auto_tracking",
-    "schedule": "0 */4 * * *"
-  },
-  {
-    "job_name": "cleanup",
-    "schedule": "0 14,21 * * *"
-  }
-]"""
+#     return """[
+#   {
+#     "job_name": "sm_product_update_default_special_price",
+#     "schedule": "*/30 * * * *"
+#   },
+#   {
+#     "job_name": "sm_product_convert_url",
+#     "schedule": "*/30 * * * *"
+#   },
+#   {
+#     "job_name": "sm_remind_limit_sent_email",
+#     "schedule": "0 * * * *"
+#   },
+#   {
+#     "job_name": "sm_sales_email_convert_sending",
+#     "schedule": "*/15 * * * *"
+#   },
+#   {
+#     "job_name": "sm_sap_auto_tracking",
+#     "schedule": "0 */4 * * *"
+#   },
+#   {
+#     "job_name": "cleanup",
+#     "schedule": "0 14,21 * * *"
+#   },
+#   {
+#     "job_name": "send_email_order_ready_to_collect_first",
+#     "schedule": "*/27 * * * *"
+#   },
+#   {
+#     "job_name": "send_email_order_ready_to_collect_second",
+#     "schedule": "*/29 * * * *"
+#   },
+#   {
+#     "job_name": "send_email_invoice_paid",
+#     "schedule": "*/31 * * * *"
+#   },
+#   {
+#     "job_name": "send_reminder",
+#     "schedule": "* * * * *"
+#   },
+#   {
+#     "job_name": "sm_force_sapexpress_cron",
+#     "schedule": "00 1,3,5,7,9,11,13,15,17,19,21,23 * * *"
+#   },
+#   {
+#     "job_name": "wavecell_send_order_confirmation",
+#     "schedule": "*/20 * * * *"
+#   },
+#   {
+#     "job_name": "wavecell_send_payment_verified",
+#     "schedule": "*/5 * * * *"
+#   },
+#   {
+#     "job_name": "wavecell_send_shipment",
+#     "schedule": "*/25 * * * *"
+#   },
+#   {
+#     "job_name": "update_status_pre_shipment",
+#     "schedule": "00 */3 * * *"
+#   },
+#   {
+#     "job_name": "create_purchase_for_order",
+#     "schedule": "*/10 * * * *"
+#   },
+#   {
+#     "job_name": "create_refund_for_order",
+#     "schedule": "*/10 * * * *"
+#   },
+#   {
+#     "job_name": "thor_create_refund_for_order",
+#     "schedule": "0 */4 * * *"
+#   },
+#   {
+#     "job_name": "report_request_failed",
+#     "schedule": "0 23 * * *"
+#   },
+#   {
+#     "job_name": "sm_product_update_configurable_image",
+#     "schedule": "*/10 * * * *"
+#   },
+#   {
+#     "job_name": "sm_product_configurable_without_image",
+#     "schedule": "*/15 * * * *"
+#   },
+#   {
+#     "job_name": "sm_media_product_image_listing",
+#     "schedule": "*/30 * * * *"
+#   },
+#   {
+#     "job_name": "sm_media_cms_image_listing",
+#     "schedule": "*/30 * * * *"
+#   },
+#   {
+#     "job_name": "sm_media_image_clean",
+#     "schedule": "*/30 * * * *"
+#   },
+#   {
+#     "job_name": "sm_remove_invalid_lock_cron",
+#     "schedule": "*/5 * * * *"
+#   },
+#   {
+#     "job_name": "update_expiry_time",
+#     "schedule": "*/10 * * * *"
+#   },
+#   {
+#     "job_name": "sm_update_expiry_time_gopay",
+#     "schedule": "*/10 * * * *"
+#   },
+#   {
+#     "job_name": "sm_product_update_default_special_price",
+#     "schedule": "*/30 * * * *"
+#   },
+#   {
+#     "job_name": "sm_product_convert_url",
+#     "schedule": "*/30 * * * *"
+#   },
+#   {
+#     "job_name": "sm_remind_limit_sent_email",
+#     "schedule": "0 * * * *"
+#   },
+#   {
+#     "job_name": "sm_sales_email_convert_sending",
+#     "schedule": "*/15 * * * *"
+#   },
+#   {
+#     "job_name": "sm_sap_auto_tracking",
+#     "schedule": "0 */4 * * *"
+#   },
+#   {
+#     "job_name": "cleanup",
+#     "schedule": "0 14,21 * * *"
+#   }
+# ]"""
 
     prompt = (
         f"Extract the following cron jobs and convert them into JSON format. Each entry should contain 'job_name' and 'schedule'. "
