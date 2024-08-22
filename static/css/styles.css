@@ -106,9 +106,11 @@ textarea {
     border-radius: 4px;
 }
 
-.command {
-    text-align: left;
-    background-color: #f4f4f9;
-    padding: 20px;
-    font-size: small;
+.code-block {
+    font-size:small;
+    font-family: monospace;
+    padding-bottom: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
 }
