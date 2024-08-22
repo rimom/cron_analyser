@@ -6,16 +6,11 @@
 !IconImage.webp
 !app.py
 !requirements.txt
-!.magento.app.yaml
-!pyproject.toml
-!install-poetry.sh
 
 # And not these directories...
 !static/
 !templates/
-!.magento/
 
 # Ensure the contents of the static and templates directories are included
 !static/**
 !templates/**
-!.magento/**

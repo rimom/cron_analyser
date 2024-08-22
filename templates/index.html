@@ -15,15 +15,25 @@
   <body>
     <div class="input-container">
       <h1>Cron Job Visualized</h1>
+      <p class="disclaimer">
+        This tool only visualizes the cron jobs schedule, not their execution.
+        Good only to identify cron job overlappings.
+      </p>
       <p>
-        This tool only visualizes the cron jobs schedule, not their execution
-        time.
+        <p class="item">You can extract the cron schedules from the following sources:</p>
+        <p class="item">1. <code>crontab -l</code></p>
+        <p class="item">2. <code>magento-cloud repo:cat .magento.app.yaml -p &lt;project_id&gt; -e production</code></p>
+        <p class="item">3. Also, extract all cron schedules from crontab.xml files across the project using the command below:</p>
+          <div class="command">
+            <code>json_output=0; if [[ $1 == "--json" ]]; then json_output=1; fi; results=(); printf "+--------------------------------------+------------------------------------------------------------------------------+--------------------------+\n"; while IFS=',' read -r group job schedule; do if (( json_output )); then results+=("{\"group\":\"$group\",\"job\":\"$job\",\"schedule\":\"$schedule\"}"); else if [[ $group != "$prev_group" ]]; then if [[ -n "$prev_group" ]]; then printf "+--------------------------------------+------------------------------------------------------------------------------+--------------------------+\n"; fi; printf "| %-36s | %-78s | %-22s |\n" "$group" "$job" "$schedule"; else printf "| %-36s | %-78s | %-22s |\n" "" "$job" "$schedule"; fi; prev_group="$group"; fi; done < <(find ./app ./vendor -name crontab.xml -exec awk '/group id/ { gsub(/.*<group id="/, ""); gsub(/".*/, ""); group = $0 } /job name/ { gsub(/.*<job name="/, ""); gsub(/".*/, ""); job = $0 } /schedule/ { gsub(/.*<schedule>/, ""); gsub(/<\/schedule>.*/, ""); schedule = $0; print group "," job "," schedule }' {} \; | sort -t, -k1,1 -k2,2); printf "+--------------------------------------+------------------------------------------------------------------------------+--------------------------+\n"; if (( json_output )); then results_string=$(IFS=','; echo "${results[*]}"); results_string="[$results_string]"; echo "$results_string" | jq; fi</code>
+          </div>
+        <p>
       </p>
       <form id="cron-form" class="form-group">
         <textarea
           id="cron-input"
           class="form-control"
-          placeholder="Paste your cron jobs here, we are going to use AI to adjust it to the proper format and feed the chart..."
+          placeholder="Paste your cron jobs schedule in plain text here. Don't worry about the formating as we are going to use AI to generate a json and feed the chart. Don't worry, one day this will be all automated."
           rows="8"
         ></textarea>
 
