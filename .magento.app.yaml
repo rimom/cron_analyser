@@ -1,0 +1,38 @@
+# This file describes an application. You can have multiple applications
+# in the same project.
+#
+# See https://docs.platform.sh/user_guide/reference/platform-app-yaml.html
+
+# The name of this app. Must be unique within a project.
+name: cron_app
+
+# The runtime the application uses.
+type: "python:3.10"
+
+# The build-time dependencies of the app.
+dependencies:
+    python:
+       pipenv: '*'
+
+# The hooks executed at various points in the lifecycle of the application.
+hooks:
+    build: |
+      pip install -r requirements.txt
+
+# The size of the persistent disk of the application (in MB).
+disk: 1024
+
+# The configuration of app when it is exposed to the web.
+web:
+    commands:
+        start: python app.py
+        
+# Environment variables
+variables:
+    env:
+        CONFIG__DEFAULT__PAYPAL_ONBOARDING__MIDDLEMAN_DOMAIN: 'payment-broker.magento.com'
+        CONFIG__STORES__DEFAULT__PAYPAL__NOTATION_CODE: 'Magento_Enterprise_Cloud'
+        CONFIG__DEFAULT__INDEXER__BATCH_SIZE__CATALOGINVENTORY_STOCK__SIMPLE: 200
+        MAGE_INDEXER_THREADS_COUNT: 4
+        OPENAI_API_KEY: DNfiZGEzYQ9mPf6uuLDwT3BlbkFJ3psQOizpac80qWAsYsNC
+        OPENAI_MODEL: gpt-4o-mini-2024-07-18

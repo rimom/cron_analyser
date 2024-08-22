@@ -1,0 +1,3 @@
+"https://{all}/cron_analyser":
+    type: upstream
+    upstream: "cron_app:http"
