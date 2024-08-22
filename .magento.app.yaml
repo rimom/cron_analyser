@@ -20,6 +20,7 @@ hooks:
         set -e
         ./install-poetry.sh
         export PATH="/app/.local/bin:$PATH"
+        echo "===Installing dependencies==="
         poetry install
 
 # The size of the persistent disk of the application (in MB).
