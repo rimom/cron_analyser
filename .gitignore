@@ -6,6 +6,7 @@
 !IconImage.webp
 !app.py
 !requirements.txt
+!README.md
 
 # And not these directories...
 !static/
